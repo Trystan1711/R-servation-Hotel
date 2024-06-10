@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/style.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<header>
+    <nav>
+       <H2>Reservation Hotel </H2>
+    </nav>
+</header>
+
+<body>
+<div class="container">
+    <div class="kolo">
+        <div class="counter">
+            <label for="adultes">Adultes :</label>
+            <button onclick="ajout('adultes', -1)">-</button>
+            <span id="adulteslo">0</span>
+            <button onclick="ajout('adultes', 1)">+</button>
+        </div>
+        <div class="counter">
+            <label for="enf">Enfants :</label>
+            <button onclick="ajout('enf', -1)">-</button>
+            <span id="enflo">0</span>
+            <button onclick="ajout('enf', 1)">+</button>
+        </div>
+        <div id="enfants-ages" class="ages-inputs">
+            <table id="table-enfants">
+                <thead>
+                    <tr>
+                        <th>Âge de l'enfant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="counter">
+            <label for="cham">Chambres :</label>
+            <button onclick="ajout('cham', -1)">-</button>
+            <span id="chamlo">0</span>
+            <button onclick="ajout('cham', 1)">+</button>
+        </div>
+        <div class="date-inputs">
+            <label for="start-date">Date début :</label>
+            <input type="date" id="start-date">
+            <label for="end-date">Date fin :</label>
+            <input type="date" id="end-date">
+        </div>
+        <button onclick="valider()">Reservez </button>
+        <button onclick="annuler()">Suprimez</button>
+    </div>
+
+    <div class="kolo" id="recap-kolo"></div>
+</div>
+
+<script>
+    document.getElementById('adulteslo').innerText = 0;
+    document.getElementById('enflo').innerText = 0;
+    document.getElementById('chamlo').innerText = 0;
+
+    function ajout(type, change) {
+        const countSpan = document.getElementById(`${type}lo`);
+        let count = parseInt(countSpan.innerText);
+        count = isNaN(count) ? 0 : count + change;
+        count = count < 0 ? 0 : count;
+        countSpan.innerText = count;
+
+        if (type === 'enf') {
+            afficherChampsAges(count);
+        }
+
+        const buttons = document.querySelectorAll(`.counter button`);
+        buttons.forEach(button => {
+            const buttonType = button.textContent === '+' ? 1 : -1;
+            const countType = buttonType === 1 ? count : (count - 1);
+            if (type === button.parentElement.querySelector('label').htmlFor) {
+                button.disabled = (buttonType === -1 && count <= 0);
+            }
+        });
+    }
+
+    function afficherChampsAges(nombreEnfants) {
+        const tbody = document.querySelector('#table-enfants tbody');
+        tbody.innerHTML = '';
+        for (let i = 0; i < nombreEnfants; i++) {
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.min = 0;
+            input.max = 17;
+            input.required = true;
+            td.appendChild(input);
+            tr.appendChild(td);
+            tbody.appendChild(tr);
+        }
+    }
+
+    function valider() {
+        const adultes = document.getElementById('adulteslo').innerText;
+        const enfants = document.getElementById('enflo').innerText;
+        const chambres = document.getElementById('chamlo').innerText;
+        const startDate = document.getElementById('start-date').value;
+        const endDate = document.getElementById('end-date').value;
+        const recapDiv = document.getElementById('recap-kolo');
+
+        if (new Date(startDate) >= new Date(endDate)) {
+            alert('La date de début doit être inférieure à la date de fin.');
+            return;
+        }
+
+        const ages = [];
+        document.querySelectorAll('#table-enfants input').forEach(input => {
+            const age = parseInt(input.value);
+            if (isNaN(age) || age < 0 || age > 17) {
+                alert('Veuillez entrer un âge valide pour chaque enfant (entre 0 et 17 ans).');
+                return;
+            }
+            ages.push(age);
+        });
+
+        let recapText = `Récapitulatif de la réservation :\n
+                         Adultes : ${adultes}\n
+                         Enfants : ${enfants}\n
+                         Chambres : ${chambres}\n
+                         Date début : ${startDate}\n
+                         Date fin : ${endDate}\n`;
+        if (ages.length > 0) {
+            recapText += `Âges des enfants : ${ages.join(', ')}\n`;
+        }
+        
+        recapDiv.innerText = recapText;
+    }
+    function annuler() {
+        document.getElementById('adulteslo').innerText = 0;
+    document.getElementById('enflo').innerText = 0;
+    document.getElementById('chamlo').innerText = 0;
+    const tbody = document.querySelector('#table-enfants tbody');
+    tbody.innerHTML = '';
+    document.getElementById('start-date').value = '';
+    document.getElementById('end-date').value = '';
+    document.getElementById('recap-kolo').innerText = '';
+
+    }
+</script>
+</body>
+
+</html>
