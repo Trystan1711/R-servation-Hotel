@@ -1,0 +1,101 @@
+body {
+    background-image: url(../img/31386929.jpg);
+    font-family: Arial, sans-serif;
+}
+header {
+    background-color: #ffffff; 
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #cccccc;
+}
+header nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+header nav a:hover {
+    color: #007BFF;
+}
+.content {
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.kolo {
+    border-radius: 70px;
+    width: 300px;
+    background: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.counter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.counter label {
+    font-size: 18px;
+    flex: 5;
+}
+
+.counter button {
+    width: 30px;
+    height: 30px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.counter button:disabled {
+    background-color: #ff0000;
+    cursor: not-allowed;
+}
+
+.counter span {
+    font-size: 30px;
+}
+
+.ages-inputs {
+    margin: 20px 0;
+}
+
+.date-inputs {
+    margin: 20px 0;
+}
+
+.date-inputs label, .date-inputs input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.recap {
+    margin-top: 20px;
+    white-space: pre-wrap; /* Pour respecter les retours à la ligne du texte */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table, th, td {
+    border: 1px solid #cccccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
